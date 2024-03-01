@@ -8,7 +8,7 @@ app = Dash(__name__, use_pages=True, title="Dash: Polars vs Pandas", suppress_ca
 
 
 nav_items = {
-    page['name'].replace("-", " ").title(): page['path'] for page in dash.page_registry.values()
+    page['name'].replace("_", " ").title(): page['path'] for page in dash.page_registry.values()
 }
 
 def serve_layout(): 
@@ -56,13 +56,15 @@ def serve_layout():
                     ),
                     dmc.Col(
                         span=8,
-                        p="xl",
+                        p="sm",
                         style={'background-color': '#f1f5f9'},
                         children=[
-                            dmc.Container([
+                            dmc.Container(children=[
                                 dmc.Space(h=30),
                                 dash.page_container,
-                            ]),
+                            ],
+                            # px=0,
+                            ),
                         ],
                     ),
                 ],

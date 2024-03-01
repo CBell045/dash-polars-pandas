@@ -27,7 +27,7 @@ def timer(func):
         start = time.perf_counter()
         func(*args, **kwargs)
         end = time.perf_counter()
-        return f"{func.__name__} took {end - start} seconds"
+        return end - start
     return wrapper
 
 
