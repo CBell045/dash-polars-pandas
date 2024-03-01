@@ -27,7 +27,15 @@ def serve_layout():
                                     "fontWeight": 600, 
                                         }
                                     }
-                                }
+                                },
+                        "NavLink": {
+                            "styles": {
+                                "root": {
+                                    "border-radius": 9,
+                                        }
+                                    }
+                                },
+                                
                             }
                         },
             children=dmc.Grid(
