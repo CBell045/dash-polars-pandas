@@ -7,9 +7,9 @@ import plotly.express as px
 import plotly.graph_objects as go
 from dash_iconify import DashIconify
 
-dash.register_page(__name__)
+dash.register_page(__name__, path='/')
 
-example_fig = go.Figure(layout=dict(height=250), path='/')
+example_fig = go.Figure(layout=dict(height=250))
 
 
 layout = [
