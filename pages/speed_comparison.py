@@ -9,7 +9,7 @@ from dash_iconify import DashIconify
 
 dash.register_page(__name__)
 
-example_fig = go.Figure(layout=dict(height=250))
+example_fig = go.Figure(layout=dict(height=250), path='/')
 
 
 layout = [

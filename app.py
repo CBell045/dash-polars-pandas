@@ -31,7 +31,7 @@ def serve_layout():
                         "NavLink": {
                             "styles": {
                                 "root": {
-                                    "border-radius": 9,
+                                    "border-radius": 8,
                                         }
                                     }
                                 },
