@@ -37,6 +37,7 @@ layout = [
             dmc.Card([
                 dmc.Title("Pandas", order=5),
                 show_code(query_1_pandas),
+                
             ], withBorder=True, shadow="md"),
         ]),
         dmc.Col(span=6, children=[
@@ -47,8 +48,14 @@ layout = [
         ]),
         dmc.Col(span=12, children=[
             dmc.Card([
-                dmc.Button("Run Query 1", id="button-1"),
+                dmc.Group([
+                    dmc.Button("Run Query 1", id="button-1"),
+                    dmc.Text(children="Pandas vs Polars Time: ", size='sm'),
+                    dmc.Text(id="q1-time", size='sm'),
+                ]),
+                
                 dcc.Graph(figure=example_fig, id="output-1-fig"),
+
             ], withBorder=True, shadow="md"),
             
         ]),
@@ -60,11 +67,12 @@ layout = [
 
 @callback(
     Output("output-1-fig", "figure"),
+    Output("q1-time", "children"),
     Input("button-1", "n_clicks"),
 )
 def query_1(n_clicks):
     pandas_time = timer(query_1_pandas)()
     polars_time = timer(query_1_polars)()
     fig = px.bar(y=["Polars", "Pandas"], x=[polars_time, pandas_time], template='none', height=250)
-    return fig
+    return fig, f"{pandas_time:.4f}s vs {polars_time:.4f}s"
     

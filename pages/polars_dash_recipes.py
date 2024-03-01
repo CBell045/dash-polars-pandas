@@ -27,5 +27,5 @@ layout = [
             ], withBorder=True, shadow="md"),
         ]),
     ]),
-    ]
+]
 
