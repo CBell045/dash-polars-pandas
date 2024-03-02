@@ -40,6 +40,8 @@ def query_1_polars():
     df = pl.read_csv("data/titanic.csv")
     return df
 
+
+# Query 2
 df = pl.read_csv("data/titanic.csv")
 def query_2_polars():
     df = (
@@ -56,4 +58,15 @@ def query_2_polars():
         )
         .sort(['l_returnflag', 'l_linestatus'])
         )
+    return df
+
+
+
+# Query 3
+def query_3_pandas():
+    df = pd.read_parquet('tpch-main/parquet/lineitem')
+    return df
+
+def query_3_polars():
+    df = pl.read_parquet('tpch-main/parquet/lineitem/*')
     return df
