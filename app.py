@@ -38,45 +38,57 @@ def serve_layout():
                                 
                             }
                         },
-            children=dmc.Grid(
-                grow=True,
-                children=[
-                    dmc.Col(
-                        span=1,
-                        p=0,
-                        children=[
-                            dmc.Navbar(
-                                p="md",
-                                children=[
+            children=[
+                dmc.Grid(
+                    grow=True,
+                    children=[
+                        dmc.Col(
+                            span=1,
+                            p=0,
+                            children=[
+                                dmc.Navbar(
+                                    p="md",
+                                    children=[
+                                        dmc.Space(h=30),
+                                        # Title
+                                        dmc.Center([
+                                            dmc.Title("Dash Polars vs Pandas", order=5),
+                                        ]),
+                                        dmc.Space(h=20),
+                                        *[dmc.NavLink(
+                                            label=page,
+                                            href=path,
+                                            id=page,
+                                        ) for page, path in nav_items.items()],
+                                    ],
+                                )],
+                        ),
+                        dmc.Col(
+                            span=8,
+                            p="sm",
+                            style={'background-color': '#f1f5f9'},
+                            children=[
+                                dmc.Container(children=[
                                     dmc.Space(h=30),
-                                    # Title
-                                    dmc.Center([
-                                        dmc.Title("Dash Polars vs Pandas", order=5),
-                                    ]),
-                                    dmc.Space(h=20),
-                                    *[dmc.NavLink(
-                                        label=page,
-                                        href=path,
-                                        id=page,
-                                    ) for page, path in nav_items.items()],
+                                    dash.page_container,
+                                    
                                 ],
-                            )],
-                    ),
-                    dmc.Col(
-                        span=8,
-                        p="sm",
-                        style={'background-color': '#f1f5f9'},
-                        children=[
-                            dmc.Container(children=[
-                                dmc.Space(h=30),
-                                dash.page_container,
+                                m='sm',
+                                style={'max-width': '1500px'}
+
+                                ),
+                    
                             ],
-                            # px=0,
-                            ),
-                        ],
-                    ),
-                ],
-            )
+                        ),
+                        dmc.Col(
+                            span=12,
+                            children=[
+                                dmc.Text("© Chad Bell"),
+                                        
+                        ]),
+                    ],
+                ),
+            ],
         )
     ])
 

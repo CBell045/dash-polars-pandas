@@ -31,17 +31,18 @@ def create_query(q_number, title, text):
                 ], withBorder=True, shadow="md"),
             ]),
             dmc.Col(span=12, children=[
-                dmc.Card([
-                    dmc.Group([
-                        dmc.Button(f"Run Query {q_number}", id={"type": "button", "index": q_number}),
-                        dmc.Text(children="Pandas vs Polars Time: ", size='sm'),
-                        dmc.Text(size='sm', id={"type": "time", "index": q_number}),
-                    ]),
-                    
-                    dcc.Graph(figure=go.Figure(layout=dict(height=250)), id={"type": "fig", "index": q_number}),
+                dmc.LoadingOverlay([
+                    dmc.Card([
+                        dmc.Group([
+                            dmc.Button(f"Run Query {q_number}", id={"type": "button", "index": q_number}),
+                            dmc.Text(children="Pandas vs Polars Time: ", size='sm'),
+                            dmc.Text(size='sm', id={"type": "time", "index": q_number}),
+                        ]),
+                        
+                        dcc.Graph(figure=go.Figure(layout=dict(height=250)), id={"type": "fig", "index": q_number}),
 
-                ], withBorder=True, shadow="md"),
-                
+                    ], withBorder=True, shadow="md"),
+                ]),
             ]),
         ],
         gutter="xl",
@@ -60,7 +61,7 @@ layout = [
                 closeDelay=1,
                 children=[
                     dmc.HoverCardTarget(DashIconify(icon="feather:info", width=17)),
-                    dmc.HoverCardDropdown(dmc.Alert("For simplicity in comparing to Pandas, these examples do not use LazyFrames. This is not a real benchmark and further optimizations could be implemented with Polars.", title="Disclaimer", color="red")),
+                    dmc.HoverCardDropdown(dmc.Alert("For simplicity in comparing to Pandas, these examples do not use LazyFrames. This is not a real benchmark and further optimizations could be implemented.", title="Disclaimer", color="red")),
                 ],
             ),
         ]),
