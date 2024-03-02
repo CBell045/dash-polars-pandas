@@ -3,4 +3,4 @@ __pycache__/
 *.pyc
 cache-directory/
 .venv/
-testing.ipynb
+ignore/

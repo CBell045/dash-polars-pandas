@@ -42,10 +42,62 @@ def query_1_polars():
 
 
 # Query 2
-df = pl.read_csv("data/titanic.csv")
+titanic = pd.read_csv("data/titanic.csv")
+def query_2_pandas():
+    titanic["Age"]
+    titanic["Age"].shape
+    titanic[["Age", "Sex"]]
+    titanic[titanic["Age"] > 35]
+    titanic[(titanic["Pclass"] == 2) | (titanic["Pclass"] == 3)]
+    titanic[titanic["Age"].notna()]
+    titanic.loc[titanic["Age"] > 35, "Name"]
+    return 
+
+titanic_pl = pl.read_csv("data/titanic.csv")
 def query_2_polars():
+    titanic_pl.select("Age")
+    titanic_pl.select("Age").shape
+    titanic_pl.select(["Age", "Sex"])
+    titanic_pl.filter(pl.col("Age") > 35)
+    titanic_pl.filter(pl.col("Pclass").is_in([2, 3]))
+    titanic_pl.filter(pl.col("Age").is_not_null())
+    titanic_pl.filter(pl.col("Age") > 35).select(pl.col("Name"))
+    return 
+
+# Query 3
+def query_3_pandas():
+    df = pd.read_parquet('data/tpch/lineitem')
+    return df
+
+def query_3_polars():
+    df = pl.read_parquet('data/tpch/lineitem/*')
+    return df
+
+
+# Query 4
+lineitem_pd = pd.read_parquet('data/tpch/lineitem')
+def query_4_pandas():
     df = (
-        df.filter(pl.col('l_shipdate') <= pl.date(1998, 12, 1) - pl.duration(days=90))
+        lineitem_pd[lineitem_pd['l_shipdate'] <= pd.to_datetime('1998-12-01').date() - pd.Timedelta(days=90)]
+        .groupby(['l_returnflag', 'l_linestatus']).agg(
+            sum_qty=pd.NamedAgg(column='l_quantity', aggfunc='sum'),
+            sum_base_price=pd.NamedAgg(column='l_extendedprice', aggfunc='sum'),
+            sum_disc_price=pd.NamedAgg(column='l_extendedprice', aggfunc=lambda x: (x * (1 - lineitem_pd['l_discount'])).sum()),
+            sum_charge=pd.NamedAgg(column='l_extendedprice', aggfunc=lambda x: (x * (1 - lineitem_pd['l_discount'] * (1 + lineitem_pd['l_tax']))).sum()),
+            avg_qty=pd.NamedAgg(column='l_quantity', aggfunc='mean'),
+            avg_price=pd.NamedAgg(column='l_extendedprice', aggfunc='mean'),
+            avg_disc=pd.NamedAgg(column='l_discount', aggfunc='mean'),
+            count_order=pd.NamedAgg(column='l_orderkey', aggfunc='count')
+        )
+        .sort_values(['l_returnflag', 'l_linestatus'])
+        )
+    return df
+
+
+lineitem_pl = pl.read_parquet('data/tpch/lineitem/*')
+def query_4_polars():
+    df = (
+        lineitem_pl.filter(pl.col('l_shipdate') <= pl.date(1998, 12, 1) - pl.duration(days=90))
         .group_by(['l_returnflag', 'l_linestatus']).agg(
             sum_qty=pl.col('l_quantity').sum(),
             sum_base_price=pl.col('l_extendedprice').sum(),
@@ -58,15 +110,4 @@ def query_2_polars():
         )
         .sort(['l_returnflag', 'l_linestatus'])
         )
-    return df
-
-
-
-# Query 3
-def query_3_pandas():
-    df = pd.read_parquet('tpch-main/parquet/lineitem')
-    return df
-
-def query_3_polars():
-    df = pl.read_parquet('tpch-main/parquet/lineitem/*')
     return df
