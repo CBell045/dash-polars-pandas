@@ -1,7 +1,7 @@
 import dash
 import dash_mantine_components as dmc
 from dash import html, Dash, dcc, Input, Output, State
-
+from dash_iconify import DashIconify
 
 # Initialize Dash app.
 app = Dash(__name__, use_pages=True, title="Dash: Polars vs Pandas", suppress_callback_exceptions=True)
@@ -74,18 +74,37 @@ def serve_layout():
                                     
                                 ],
                                 m='sm',
-                                style={'max-width': '1500px'}
-
+                                style={'max-width': '1500px'},
                                 ),
-                    
                             ],
                         ),
                         dmc.Col(
-                            span=12,
-                            children=[
-                                dmc.Text("© Chad Bell"),
-                                        
-                        ]),
+                            span=11,
+                            style={'text-align': 'right'},
+                                children=[
+                                    dmc.Group(
+                                        m="md",
+                                        children=[
+                                            "By Chad Bell",
+                                            dmc.Anchor(
+                                                href="https://www.linkedin.com/in/chadbell045/",
+                                                children=DashIconify(icon="mdi:linkedin", width=28, color="black")
+                                            ),
+                                            dmc.Anchor(
+                                                href="https://github.com/CBell045/dash-polars-pandas",
+                                                children=DashIconify(icon="mdi:github", width=28, color="black")
+                                            ),
+                                            dmc.Anchor(
+                                                href="mailto:chadbell045@gmail.com",
+                                                children=DashIconify(icon="heroicons:envelope-16-solid", width=28, color="black")
+                                            ),
+                                                
+                                        ],
+                                            
+                                    ),
+                                            
+                                ],
+                            ),
                     ],
                 ),
             ],
