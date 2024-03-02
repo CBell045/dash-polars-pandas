@@ -1,4 +1,8 @@
 # Dash: Polars vs. Pandas
+![Polars vs. Pandas](assets/polars_vs_pandas.png)
+Image Credit: Google Gemini
+
+
 This is a simple comparison between Polars and Pandas as used in a Plotly Dash App. 
 
 ## Introduction
