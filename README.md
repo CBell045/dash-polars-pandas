@@ -1,11 +1,14 @@
 # Dash: Polars vs. Pandas
-![Polars vs. Pandas](assets/polars_vs_pandas.png)
+![Polars vs. Pandas](images/polars_vs_pandas.png)
 Image Credit: Google Gemini
 
 
 This is a simple comparison between Polars and Pandas as used in a Plotly Dash App. 
 
-You can check out the app [here](https://dash-polars-pandas.onrender.com/).
+<!-- You can check out the app [here](https://dash-polars-pandas.onrender.com/). -->
+
+## App Preview
+![App](images/app.png)
 
 ## Introduction
 This app includes 3 main pages:
