@@ -5,6 +5,8 @@ Image Credit: Google Gemini
 
 This is a simple comparison between Polars and Pandas as used in a Plotly Dash App. 
 
+You can check out the app [here](https://dash-polars-pandas.onrender.com/).
+
 ## Introduction
 This app includes 3 main pages:
 1. **Speed Comparison**: An interactive speed comparison between Polars and Pandas. This is not fully optimized or a true benchmark, but it gives a rough idea of the speed difference between the two libraries.
