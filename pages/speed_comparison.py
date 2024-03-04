@@ -20,6 +20,7 @@ def create_query(q_number, title, text):
             dmc.Col(span=6, children=[
                 dmc.Card([
                     dmc.Title("Pandas", order=5),
+                    # Get the code from the function and display it
                     show_code(globals()[f"query_{q_number}_pandas"]),
                     
                 ], withBorder=True, shadow="md"),
@@ -58,6 +59,8 @@ layout = [
     dmc.Alert("This isn't a real benchmark and other factors in the app affect performance. For simplicity in comparing to Pandas, these examples do not use LazyFrames. But, it should give you a general idea of the performance difference between the two libraries.", title="Disclaimer", color="red"),
     dmc.Space(h=20),
     dmc.Divider(),
+
+    # Create the queries
     create_query(1, "Read Titanic CSV", "We will start by reading in a familiar dataset — the Titanic."),
     create_query(2, "Common Operations", "These come from the Pandas documentation and are common dataframe operations."),
     create_query(3, "Read TCP-H Parquet", "Ramping up -- we will read in a larger dataset, a subset of the TCP-H benchmark."),
