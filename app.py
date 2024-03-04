@@ -6,7 +6,10 @@ from dash_iconify import DashIconify
 # Initialize Dash app.
 app = Dash(__name__, use_pages=True, title="Dash: Polars vs Pandas", suppress_callback_exceptions=True)
 
+# Initialize the server
+server = app.server
 
+# Create the nav pages by removing underscores and capitalizing them
 nav_items = {
     page['name'].replace("_", " ").title(): page['path'] for page in dash.page_registry.values()
 }
@@ -40,14 +43,15 @@ def serve_layout():
                         },
             children=[
                 dmc.Grid(
-                    grow=True,
+                    # grow=True,
                     children=[
                         dmc.Col(
-                            span=1,
+                            span=2,
                             p=0,
                             children=[
                                 dmc.Navbar(
                                     p="md",
+                                    withBorder=False,
                                     children=[
                                         dmc.Space(h=30),
                                         # Title
@@ -64,23 +68,20 @@ def serve_layout():
                                 )],
                         ),
                         dmc.Col(
-                            span=8,
-                            p="sm",
-                            style={'background-color': '#f1f5f9'},
+                            span=10,
+                            style={'backgroundColor': '#f1f5f9'},
                             children=[
                                 dmc.Container(children=[
                                     dmc.Space(h=30),
-                                    dash.page_container,
-                                    
+                                    dash.page_container, 
                                 ],
-                                m='sm',
-                                style={'max-width': '1500px'},
+                                p='xl',
+                                fluid=True,
                                 ),
                             ],
                         ),
                         dmc.Col(
-                            span=11,
-                            style={'text-align': 'right'},
+                            span=12,
                                 children=[
                                     dmc.Group(
                                         m="md",
@@ -111,16 +112,18 @@ def serve_layout():
         )
     ])
 
+# Dynamically serve the layout
 app.layout = serve_layout
 
 
-""" Set active navlink """
+
 page_outputs = [Output(label, "active") for label in nav_items.keys()]
 @app.callback(
     *page_outputs,
     Input("url", "pathname"),
 )
 def set_active_navlink(pathname):
+    """ Set active navlinks """
     return [pathname == href for href in nav_items.values()]
 
 

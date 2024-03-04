@@ -53,18 +53,9 @@ def create_query(q_number, title, text):
 # Define the layout
 layout = [
     dmc.Title("Speed Comparison", order=1),
-    dmc.Group([
-        dmc.Text("This page allows you to visualize the performance difference between Polars and Pandas."),
-        dmc.HoverCard(
-                shadow="md",
-                openDelay=1,
-                closeDelay=1,
-                children=[
-                    dmc.HoverCardTarget(DashIconify(icon="feather:info", width=17)),
-                    dmc.HoverCardDropdown(dmc.Alert("For simplicity in comparing to Pandas, these examples do not use LazyFrames. This is not a real benchmark and further optimizations could be implemented.", title="Disclaimer", color="red")),
-                ],
-            ),
-        ]),
+    dmc.Text("This page allows you to visualize the performance difference between Polars and Pandas. Click the 'Run Query' button to see the time it takes to run the query in both Polars and Pandas."),
+    dmc.Space(h=10),
+    dmc.Alert("This isn't a real benchmark and other factors in the app affect performance. For simplicity in comparing to Pandas, these examples do not use LazyFrames. But, it should give you a general idea of the performance difference between the two libraries.", title="Disclaimer", color="red"),
     dmc.Space(h=20),
     dmc.Divider(),
     create_query(1, "Read Titanic CSV", "We will start by reading in a familiar dataset — the Titanic."),

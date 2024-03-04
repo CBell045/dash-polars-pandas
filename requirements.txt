@@ -1,6 +1,7 @@
 dash==2.15.0
 dash-mantine-components==0.12.1
 dash-iconify==0.1.2
+gunicorn==21.2.0
 pandas==2.2.1
 polars==0.20.13
 pyarrow==15.0.0

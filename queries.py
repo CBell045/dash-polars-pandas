@@ -11,15 +11,19 @@ def show_code(function):
     # Split the source code into lines
     source_lines = full_source.split('\n')
 
+    # Remove the first 4 spaces from each line
+    source_lines = [line[4:] for line in source_lines]
+
     # Exclude the first and last line which contain def and the return statement
-    body_lines = source_lines[1:-2]  
+    body_lines = source_lines[1:-2]
 
     # Join the lines back together
     body_source = '\n'.join(body_lines)
-    
+
     return dmc.Prism(
         body_source,
-        language="python"
+        language="python",
+        trim=False,
     )
 
 def timer(func):
@@ -77,37 +81,37 @@ def query_3_polars():
 # Query 4
 lineitem_pd = pd.read_parquet('data/tpch/lineitem')
 def query_4_pandas():
-    df = (
-        lineitem_pd[lineitem_pd['l_shipdate'] <= pd.to_datetime('1998-12-01').date() - pd.Timedelta(days=90)]
-        .groupby(['l_returnflag', 'l_linestatus']).agg(
-            sum_qty=pd.NamedAgg(column='l_quantity', aggfunc='sum'),
-            sum_base_price=pd.NamedAgg(column='l_extendedprice', aggfunc='sum'),
-            sum_disc_price=pd.NamedAgg(column='l_extendedprice', aggfunc=lambda x: (x * (1 - lineitem_pd['l_discount'])).sum()),
-            sum_charge=pd.NamedAgg(column='l_extendedprice', aggfunc=lambda x: (x * (1 - lineitem_pd['l_discount'] * (1 + lineitem_pd['l_tax']))).sum()),
-            avg_qty=pd.NamedAgg(column='l_quantity', aggfunc='mean'),
-            avg_price=pd.NamedAgg(column='l_extendedprice', aggfunc='mean'),
-            avg_disc=pd.NamedAgg(column='l_discount', aggfunc='mean'),
-            count_order=pd.NamedAgg(column='l_orderkey', aggfunc='count')
-        )
-        .sort_values(['l_returnflag', 'l_linestatus'])
-        )
-    return df
+  (
+    lineitem_pd[lineitem_pd['l_shipdate'] <= pd.to_datetime('1998-12-01').date() - pd.Timedelta(days=90)]
+    .groupby(['l_returnflag', 'l_linestatus']).agg(
+        sum_qty=pd.NamedAgg(column='l_quantity', aggfunc='sum'),
+        sum_base_price=pd.NamedAgg(column='l_extendedprice', aggfunc='sum'),
+        sum_disc_price=pd.NamedAgg(column='l_extendedprice', aggfunc=lambda x: (x * (1 - lineitem_pd['l_discount'])).sum()),
+        sum_charge=pd.NamedAgg(column='l_extendedprice', aggfunc=lambda x: (x * (1 - lineitem_pd['l_discount'] * (1 + lineitem_pd['l_tax']))).sum()),
+        avg_qty=pd.NamedAgg(column='l_quantity', aggfunc='mean'),
+        avg_price=pd.NamedAgg(column='l_extendedprice', aggfunc='mean'),
+        avg_disc=pd.NamedAgg(column='l_discount', aggfunc='mean'),
+        count_order=pd.NamedAgg(column='l_orderkey', aggfunc='count')
+    )
+    .sort_values(['l_returnflag', 'l_linestatus'])
+  )
+  return
 
 
 lineitem_pl = pl.read_parquet('data/tpch/lineitem/*')
 def query_4_polars():
-    df = (
-        lineitem_pl.filter(pl.col('l_shipdate') <= pl.date(1998, 12, 1) - pl.duration(days=90))
-        .group_by(['l_returnflag', 'l_linestatus']).agg(
-            sum_qty=pl.col('l_quantity').sum(),
-            sum_base_price=pl.col('l_extendedprice').sum(),
-            sum_disc_price=(pl.col('l_extendedprice') * (1 - pl.col('l_discount'))).sum(),
-            sum_charge=(pl.col('l_extendedprice') * (1 - pl.col('l_discount') * (1 + pl.col('l_tax')))).sum(),
-            avg_qty=pl.col('l_quantity').mean(),
-            avg_price=pl.col('l_extendedprice').mean(),
-            avg_disc=pl.col('l_discount').mean(),
-            count_order=pl.col('l_orderkey').count()
-        )
-        .sort(['l_returnflag', 'l_linestatus'])
-        )
-    return df
+  (
+    lineitem_pl.filter(pl.col('l_shipdate') <= pl.date(1998, 12, 1) - pl.duration(days=90))
+    .group_by(['l_returnflag', 'l_linestatus']).agg(
+        sum_qty=pl.col('l_quantity').sum(),
+        sum_base_price=pl.col('l_extendedprice').sum(),
+        sum_disc_price=(pl.col('l_extendedprice') * (1 - pl.col('l_discount'))).sum(),
+        sum_charge=(pl.col('l_extendedprice') * (1 - pl.col('l_discount') * (1 + pl.col('l_tax')))).sum(),
+        avg_qty=pl.col('l_quantity').mean(),
+        avg_price=pl.col('l_extendedprice').mean(),
+        avg_disc=pl.col('l_discount').mean(),
+        count_order=pl.col('l_orderkey').count()
+    )
+    .sort(['l_returnflag', 'l_linestatus'])
+  )
+  return
