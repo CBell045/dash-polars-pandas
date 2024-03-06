@@ -92,7 +92,7 @@ def run_queries(n_clicks, id):
     polars_time = timer(polars_func)()
 
     # Create the figure
-    fig = px.bar(y=["Polars", "Pandas"], x=[polars_time, pandas_time], template='none', height=250)
+    fig = px.bar(y=["Polars", "Pandas"], x=[polars_time, pandas_time], template='none', height=250, labels={"x": "Time (s)", "y": ""})
 
     # Return the figure and the time it took to run the functions
     return fig, f"{pandas_time:.4f}s vs {polars_time:.4f}s"

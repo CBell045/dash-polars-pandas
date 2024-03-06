@@ -3,3 +3,4 @@ __pycache__/
 *.pyc
 cache-directory/
 .venv/
+.DS_Store
