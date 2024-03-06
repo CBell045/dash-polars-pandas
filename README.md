@@ -8,7 +8,9 @@ This is a simple comparison between Polars and Pandas as used in a Plotly Dash A
 <!-- You can check out the app [here](https://dash-polars-pandas.onrender.com/). -->
 
 ## App Preview
-![App](images/app.png)
+Here's a preview of the app:
+[![App](images/app.png)](https://dash-polars-pandas-docker.onrender.com/)
+Demo: [https://dash-polars-pandas-docker.onrender.com/](https://dash-polars-pandas-docker.onrender.com/)
 
 ## Introduction
 This app includes 3 main pages:
