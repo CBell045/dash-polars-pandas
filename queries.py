@@ -82,7 +82,7 @@ def query_3_polars():
 lineitem_pd = pd.read_parquet('data/tpch/lineitem')
 def query_4_pandas():
   (
-    lineitem_pd[lineitem_pd['l_shipdate'] <= pd.to_datetime('1998-12-01').date() - pd.Timedelta(days=90)]
+    lineitem_pd[lineitem_pd['l_shipdate'].dt.date <= pd.to_datetime('1998-12-01').date() - pd.Timedelta(days=90)]
     .groupby(['l_returnflag', 'l_linestatus']).agg(
         sum_qty=pd.NamedAgg(column='l_quantity', aggfunc='sum'),
         sum_base_price=pd.NamedAgg(column='l_extendedprice', aggfunc='sum'),

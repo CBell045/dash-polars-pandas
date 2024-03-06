@@ -78,6 +78,8 @@ layout = [
     State({"type": "button", "index": MATCH}, "id"),
 )
 def run_queries(n_clicks, id):
+    if n_clicks is None:
+        return dash.no_update, dash.no_update
     # Get the query number from the id
     q_number = id.get("index")
 

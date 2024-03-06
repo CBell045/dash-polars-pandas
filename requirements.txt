@@ -4,4 +4,4 @@ dash-iconify==0.1.2
 gunicorn==21.2.0
 pandas==2.2.1
 polars==0.20.13
-pyarrow==15.0.0
+fastparquet==2024.2.0
