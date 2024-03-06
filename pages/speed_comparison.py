@@ -1,13 +1,16 @@
 import dash
 from dash import dcc, callback, Input, Output, State, html, MATCH
 import dash_mantine_components as dmc
-from queries import *
+import queries
 import plotly.express as px
 import plotly.graph_objects as go
 from dash_iconify import DashIconify
 
 # Initialize the page
 dash.register_page(__name__, path='/')
+
+show_code = getattr(queries, "show_code")
+timer = getattr(queries, "timer")
 
 # Create a query from the query number, title, and text
 def create_query(q_number, title, text):
@@ -21,14 +24,13 @@ def create_query(q_number, title, text):
                 dmc.Card([
                     dmc.Title("Pandas", order=5),
                     # Get the code from the function and display it
-                    show_code(globals()[f"query_{q_number}_pandas"]),
-                    
+                    show_code(getattr(queries, f"query_{q_number}_pandas")),                    
                 ], withBorder=True, shadow="md"),
             ]),
             dmc.Col(span=6, children=[
                 dmc.Card([
                     dmc.Title("Polars", order=5),
-                    show_code(globals()[f"query_{q_number}_polars"]),
+                    show_code(getattr(queries, f"query_{q_number}_polars")),
                 ], withBorder=True, shadow="md"),
             ]),
             dmc.Col(span=12, children=[
@@ -84,8 +86,8 @@ def run_queries(n_clicks, id):
     q_number = id.get("index")
 
     # Get the function names from the query number
-    pandas_func = globals()[f"query_{q_number}_pandas"]
-    polars_func = globals()[f"query_{q_number}_polars"]
+    pandas_func = getattr(queries, f"query_{q_number}_pandas")
+    polars_func = getattr(queries, f"query_{q_number}_polars")
 
     # Get the time it takes to run the functions
     pandas_time = timer(pandas_func)()
