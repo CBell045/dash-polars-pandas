@@ -1,10 +1,9 @@
 import dash
-from dash import dcc, callback, Input, Output, State, html, MATCH
+from dash import dcc, callback, Input, Output, State, html
 import dash_mantine_components as dmc
 from queries import *
 import plotly.express as px
 import plotly.graph_objects as go
-from dash_iconify import DashIconify
 
 # Initialize the page
 dash.register_page(__name__, path='/')
@@ -70,12 +69,44 @@ layout = [
 
 
 
+# # Pattern matching callback to find which button was clicked and run the corresponding queries
+# @callback(
+#     Output({"type": "fig", "index": MATCH}, "figure"),
+#     Output({"type": "time", "index": MATCH}, "children"),
+#     Input({"type": "button", "index": MATCH}, "n_clicks"),
+#     State({"type": "button", "index": MATCH}, "id"),
+# )
+# def run_queries(n_clicks, id):
+#     if n_clicks is None:
+#         return dash.no_update, dash.no_update
+#     print('Running Query')
+#     # Get the query number from the id
+#     q_number = id.get("index")
+#     print('Query Number:', q_number)
+
+#     # Get the function names from the query number
+#     pandas_func = globals()[f"query_{q_number}_pandas"]
+#     polars_func = globals()[f"query_{q_number}_polars"]
+#     print("Pandas Function:", pandas_func)
+
+#     # Get the time it takes to run the functions
+#     pandas_time = timer(pandas_func)()
+#     polars_time = timer(polars_func)()
+
+#     print("Pandas Time:", pandas_time)
+#     # Create the figure
+#     fig = px.bar(y=["Polars", "Pandas"], x=[polars_time, pandas_time], template='none', height=250, labels={"x": "Time (s)", "y": ""})
+
+#     print('Returning Figure')
+#     # Return the figure and the time it took to run the functions
+#     return fig, f"{pandas_time:.4f}s vs {polars_time:.4f}s"
+    
 # Pattern matching callback to find which button was clicked and run the corresponding queries
 @callback(
-    Output({"type": "fig", "index": MATCH}, "figure"),
-    Output({"type": "time", "index": MATCH}, "children"),
-    Input({"type": "button", "index": MATCH}, "n_clicks"),
-    State({"type": "button", "index": MATCH}, "id"),
+    Output({"type": "fig", "index": 1}, "figure"),
+    Output({"type": "time", "index": 1}, "children"),
+    Input({"type": "button", "index": 1}, "n_clicks"),
+    State({"type": "button", "index": 1}, "id"),
 )
 def run_queries(n_clicks, id):
     if n_clicks is None:
@@ -101,4 +132,35 @@ def run_queries(n_clicks, id):
     print('Returning Figure')
     # Return the figure and the time it took to run the functions
     return fig, f"{pandas_time:.4f}s vs {polars_time:.4f}s"
-    
+
+# Pattern matching callback to find which button was clicked and run the corresponding queries
+@callback(
+    Output({"type": "fig", "index": 2}, "figure"),
+    Output({"type": "time", "index": 2}, "children"),
+    Input({"type": "button", "index": 2}, "n_clicks"),
+    State({"type": "button", "index": 2}, "id"),
+)
+def run_queries(n_clicks, id):
+    if n_clicks is None:
+        return dash.no_update, dash.no_update
+    print('Running Query')
+    # Get the query number from the id
+    q_number = id.get("index")
+    print('Query Number:', q_number)
+
+    # Get the function names from the query number
+    pandas_func = globals()[f"query_{q_number}_pandas"]
+    polars_func = globals()[f"query_{q_number}_polars"]
+    print("Pandas Function:", pandas_func)
+
+    # Get the time it takes to run the functions
+    pandas_time = timer(pandas_func)()
+    polars_time = timer(polars_func)()
+
+    print("Pandas Time:", pandas_time)
+    # Create the figure
+    fig = px.bar(y=["Polars", "Pandas"], x=[polars_time, pandas_time], template='none', height=250, labels={"x": "Time (s)", "y": ""})
+
+    print('Returning Figure')
+    # Return the figure and the time it took to run the functions
+    return fig, f"{pandas_time:.4f}s vs {polars_time:.4f}s"
