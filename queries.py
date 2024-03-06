@@ -92,7 +92,8 @@ def query_4_pandas():
         avg_qty=pd.NamedAgg(column='l_quantity', aggfunc='mean'),
         avg_price=pd.NamedAgg(column='l_extendedprice', aggfunc='mean'),
         avg_disc=pd.NamedAgg(column='l_discount', aggfunc='mean'),
-        count_order=pd.NamedAgg(column='l_orderkey', aggfunc='count'))
+        count_order=pd.NamedAgg(column='l_orderkey', aggfunc='count')
+     )
     .sort_values(['l_returnflag', 'l_linestatus'])
     )
     return
@@ -106,7 +107,7 @@ def query_4_polars():
        sum_qty=pl.col('l_quantity').sum(),
        sum_base_price=pl.col('l_extendedprice').sum(),
        sum_disc_price=(pl.col('l_extendedprice') * (1 - pl.col('l_discount'))).sum(),
-       sum_charge=(pl.col('l_extendedprice') * (1 - pl.col('l_discount') * (1 + pl.c   ('l_tax')))).sum(),
+       sum_charge=(pl.col('l_extendedprice') * (1 - pl.col('l_discount') * (1 + pl.col('l_tax')))).sum(),
        avg_qty=pl.col('l_quantity').mean(),
        avg_price=pl.col('l_extendedprice').mean(),
        avg_disc=pl.col('l_discount').mean(),
