@@ -46,8 +46,8 @@ def query_1_polars():
 
 
 # Query 2
-titanic = pd.read_csv("data/titanic.csv")
 def query_2_pandas():
+    titanic = pd.read_csv("data/titanic.csv")
     titanic["Age"]
     titanic["Age"].shape
     titanic[["Age", "Sex"]]
@@ -57,8 +57,8 @@ def query_2_pandas():
     titanic.loc[titanic["Age"] > 35, "Name"]
     return 
 
-titanic_pl = pl.read_csv("data/titanic.csv")
 def query_2_polars():
+    titanic_pl = pl.read_csv("data/titanic.csv")
     titanic_pl.select("Age")
     titanic_pl.select("Age").shape
     titanic_pl.select(["Age", "Sex"])
@@ -67,6 +67,7 @@ def query_2_polars():
     titanic_pl.filter(pl.col("Age").is_not_null())
     titanic_pl.filter(pl.col("Age") > 35).select(pl.col("Name"))
     return 
+
 
 # Query 3
 def query_3_pandas():
@@ -79,15 +80,15 @@ def query_3_polars():
 
 
 # Query 4
-lineitem_pd = pd.read_parquet('data/tpch/lineitem')
 def query_4_pandas():
+  df = pd.read_parquet('data/tpch/lineitem')
   (
-    lineitem_pd[lineitem_pd['l_shipdate'].dt.date <= pd.to_datetime('1998-12-01').date() - pd.Timedelta(days=90)]
+    df[df['l_shipdate'].dt.date <= pd.to_datetime('1998-12-01').date() - pd.Timedelta(days=90)]
     .groupby(['l_returnflag', 'l_linestatus']).agg(
         sum_qty=pd.NamedAgg(column='l_quantity', aggfunc='sum'),
         sum_base_price=pd.NamedAgg(column='l_extendedprice', aggfunc='sum'),
-        sum_disc_price=pd.NamedAgg(column='l_extendedprice', aggfunc=lambda x: (x * (1 - lineitem_pd['l_discount'])).sum()),
-        sum_charge=pd.NamedAgg(column='l_extendedprice', aggfunc=lambda x: (x * (1 - lineitem_pd['l_discount'] * (1 + lineitem_pd['l_tax']))).sum()),
+        sum_disc_price=pd.NamedAgg(column='l_extendedprice', aggfunc=lambda x: (x * (1 - df['l_discount'])).sum()),
+        sum_charge=pd.NamedAgg(column='l_extendedprice', aggfunc=lambda x: (x * (1 - df['l_discount'] * (1 + df['l_tax']))).sum()),
         avg_qty=pd.NamedAgg(column='l_quantity', aggfunc='mean'),
         avg_price=pd.NamedAgg(column='l_extendedprice', aggfunc='mean'),
         avg_disc=pd.NamedAgg(column='l_discount', aggfunc='mean'),
@@ -98,10 +99,10 @@ def query_4_pandas():
   return
 
 
-lineitem_pl = pl.read_parquet('data/tpch/lineitem/*')
 def query_4_polars():
   (
-    lineitem_pl.filter(pl.col('l_shipdate') <= pl.date(1998, 12, 1) - pl.duration(days=90))
+    pl.read_parquet('data/tpch/lineitem/*')
+    .filter(pl.col('l_shipdate') <= pl.date(1998, 12, 1) - pl.duration(days=90))
     .group_by(['l_returnflag', 'l_linestatus']).agg(
         sum_qty=pl.col('l_quantity').sum(),
         sum_base_price=pl.col('l_extendedprice').sum(),
