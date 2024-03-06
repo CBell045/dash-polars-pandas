@@ -80,20 +80,25 @@ layout = [
 def run_queries(n_clicks, id):
     if n_clicks is None:
         return dash.no_update, dash.no_update
+    print('Running Query')
     # Get the query number from the id
     q_number = id.get("index")
+    print('Query Number:', q_number)
 
     # Get the function names from the query number
     pandas_func = globals()[f"query_{q_number}_pandas"]
     polars_func = globals()[f"query_{q_number}_polars"]
+    print("Pandas Function:", pandas_func)
 
     # Get the time it takes to run the functions
     pandas_time = timer(pandas_func)()
     polars_time = timer(polars_func)()
 
+    print("Pandas Time:", pandas_time)
     # Create the figure
     fig = px.bar(y=["Polars", "Pandas"], x=[polars_time, pandas_time], template='none', height=250, labels={"x": "Time (s)", "y": ""})
 
+    print('Returning Figure')
     # Return the figure and the time it took to run the functions
     return fig, f"{pandas_time:.4f}s vs {polars_time:.4f}s"
     
