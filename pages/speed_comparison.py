@@ -111,6 +111,7 @@ layout = [
 def run_queries(n_clicks, id):
     if n_clicks is None:
         return dash.no_update, dash.no_update
+    return {}, "0.0000s vs 0.0000s"
     print('Running Query')
     # Get the query number from the id
     q_number = id.get("index")
@@ -149,8 +150,8 @@ def run_queries(n_clicks, id):
     print('Query Number:', q_number)
 
     # Get the function names from the query number
-    pandas_func = globals()[f"query_{q_number}_pandas"]
-    polars_func = globals()[f"query_{q_number}_polars"]
+    pandas_func = query_2_pandas
+    polars_func = query_2_polars
     print("Pandas Function:", pandas_func)
 
     # Get the time it takes to run the functions
