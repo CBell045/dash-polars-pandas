@@ -46,7 +46,8 @@ def serve_layout():
                     # grow=True,
                     children=[
                         dmc.Col(
-                            span=2,
+                            sm=12,
+                            md=2,
                             p=0,
                             children=[
                                 dmc.Navbar(
@@ -65,10 +66,13 @@ def serve_layout():
                                             id=page,
                                         ) for page, path in nav_items.items()],
                                     ],
-                                )],
+                                )
+                                
+                                ],
                         ),
                         dmc.Col(
-                            span=10,
+                            sm=12,
+                            md=10,
                             style={'backgroundColor': '#f1f5f9'},
                             children=[
                                 dmc.Container(children=[
