@@ -71,17 +71,17 @@ def query_2_polars():
 
 # Query 3
 def query_3_pandas():
-    df = pd.read_parquet('data/tpch/lineitem')
+    df = pd.read_parquet('data/tpch/lineitem.parquet')
     return df
 
 def query_3_polars():
-    df = pl.read_parquet('data/tpch/lineitem/*')
+    df = pl.read_parquet('data/tpch/lineitem.parquet')
     return df
 
 
 # Query 4
 def query_4_pandas():
-    df = pd.read_parquet('data/tpch/lineitem')
+    df = pd.read_parquet('data/tpch/lineitem.parquet')
     (
      df[df['l_shipdate'].dt.date <= pd.to_datetime('1998-12-01').date() - pd.Timedelta(days=90)]
      .groupby(['l_returnflag', 'l_linestatus']).agg(
@@ -101,7 +101,7 @@ def query_4_pandas():
 
 def query_4_polars():
     (
-     pl.read_parquet('data/tpch/lineitem/*')
+     pl.read_parquet('data/tpch/lineitem.parquet')
      .filter(pl.col('l_shipdate') <= pl.date(1998, 12, 1) - pl.duration(days=90))
      .group_by(['l_returnflag', 'l_linestatus']).agg(
        sum_qty=pl.col('l_quantity').sum(),
@@ -124,11 +124,11 @@ def query_5_pandas():
     var_2 = "BRASS"
     var_3 = "EUROPE"
 
-    region_df = pd.read_parquet('data/tpch/region')
-    nation_df = pd.read_parquet('data/tpch/nation')
-    supplier_df = pd.read_parquet('data/tpch/supplier')
-    part_df = pd.read_parquet('data/tpch/part')
-    part_supp_df = pd.read_parquet('data/tpch/partsupp')
+    region_df = pd.read_parquet('data/tpch/region.parquet')
+    nation_df = pd.read_parquet('data/tpch/nation.parquet')
+    supplier_df = pd.read_parquet('data/tpch/supplier.parquet')
+    part_df = pd.read_parquet('data/tpch/part.parquet')
+    part_supp_df = pd.read_parquet('data/tpch/partsupp.parquet')
 
     result_q1 = (
         part_df.merge(part_supp_df, left_on="p_partkey", right_on="ps_partkey")
@@ -171,11 +171,11 @@ def query_5_polars():
     var_2 = "BRASS"
     var_3 = "EUROPE"
 
-    region_df = pl.scan_parquet('data/tpch/region/*')
-    nation_df = pl.scan_parquet('data/tpch/nation/*')
-    supplier_df = pl.scan_parquet('data/tpch/supplier/*')
-    part_df = pl.scan_parquet('data/tpch/part/*')
-    part_supp_df = pl.scan_parquet('data/tpch/partsupp/*')
+    region_df = pl.scan_parquet('data/tpch/region.parquet')
+    nation_df = pl.scan_parquet('data/tpch/nation.parquet')
+    supplier_df = pl.scan_parquet('data/tpch/supplier.parquet')
+    part_df = pl.scan_parquet('data/tpch/part.parquet')
+    part_supp_df = pl.scan_parquet('data/tpch/partsupp.parquet')
 
     result_q1 = (
         part_df.join(part_supp_df, left_on="p_partkey", right_on="ps_partkey")
