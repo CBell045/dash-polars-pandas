@@ -58,7 +58,7 @@ layout = [
     dmc.Title("Speed Comparison", order=1),
     dmc.Text("This page allows you to visualize the performance difference between Polars and Pandas. Click the 'Run Query' button to see the time it takes to run the query in both Polars and Pandas."),
     dmc.Space(h=10),
-    dmc.Alert("This isn't a real benchmark and other factors in the app affect performance. For simplicity in comparing to Pandas, some examples do not use LazyFrames. But, it should give you a general idea of the performance difference between the two libraries.", title="Disclaimer", color="red"),
+    dmc.Alert("This isn't a real benchmark and other factors in the app affect performance. For simplicity in comparing to Pandas, some examples do not use LazyFrames. Only a subset of the TCP-H is used. But, it should give you a general idea of the performance difference between the two libraries.", title="Disclaimer", color="red"),
     dmc.Space(h=20),
     dmc.Divider(),
 
