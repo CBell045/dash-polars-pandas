@@ -65,7 +65,7 @@ layout = [
     # Create the queries
     create_query(1, "Read Titanic CSV", "We will start by reading in a familiar dataset — the Titanic."),
     create_query(2, "Common Operations", "These come from the Pandas documentation and are common dataframe operations."),
-    create_query(3, "Read TCP-H Parquet", "Ramping up -- we will read in a larger dataset, a subset of the TCP-H benchmark."),
+    create_query(3, "Read TCP-H Parquet", "Ramping up – we will read in a larger dataset, a subset of the TCP-H benchmark."),
     create_query(4, "TCP-H Query #1", "Now it's time for a real query from the TCP-H benchmark. "),
     create_query(5, "TCP-H Query #2", "This final query was taken from the Polars TCP-H benchmark and utilizes LazyFrames for optimal performance. With Lazy Execution, Polars really shines."),
 ]
