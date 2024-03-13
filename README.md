@@ -12,6 +12,8 @@ Here's a preview of the app:
 [![App](images/app.png)](https://dash-polars-pandas-docker.onrender.com/)
 Demo: [https://dash-polars-pandas-docker.onrender.com/](https://dash-polars-pandas-docker.onrender.com/)
 
+*Note: The app is hosted for free, so it might take a few seconds to load.*
+
 ## Introduction
 This app includes 3 main pages:
 1. **Speed Comparison**: An interactive speed comparison between Polars and Pandas. This is not fully optimized or a true benchmark, but it gives a rough idea of the speed difference between the two libraries.

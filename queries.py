@@ -116,3 +116,99 @@ def query_4_polars():
      .sort(['l_returnflag', 'l_linestatus'])
     )
     return
+
+
+# Query 5
+def query_5_pandas():
+    var_1 = 15
+    var_2 = "BRASS"
+    var_3 = "EUROPE"
+
+    region_df = pd.read_parquet('data/tpch/region')
+    nation_df = pd.read_parquet('data/tpch/nation')
+    supplier_df = pd.read_parquet('data/tpch/supplier')
+    part_df = pd.read_parquet('data/tpch/part')
+    part_supp_df = pd.read_parquet('data/tpch/partsupp')
+
+    result_q1 = (
+        part_df.merge(part_supp_df, left_on="p_partkey", right_on="ps_partkey")
+        .merge(supplier_df, left_on="ps_suppkey", right_on="s_suppkey")
+        .merge(nation_df, left_on="s_nationkey", right_on="n_nationkey")
+        .merge(region_df, left_on="n_regionkey", right_on="r_regionkey")
+        .loc[lambda x: x['p_size'] == var_1]
+        .loc[lambda x: x['p_type'].str.endswith(var_2)]
+        .loc[lambda x: x['r_name'] == var_3]
+    )
+
+    final_cols = [
+        "s_acctbal",
+        "s_name",
+        "n_name",
+        "p_partkey",
+        "p_mfgr",
+        "s_address",
+        "s_phone",
+        "s_comment",
+    ]
+
+    q_final = (
+        result_q1.groupby("p_partkey")
+        .agg({'ps_supplycost': 'min'})
+        .merge(result_q1, on=["p_partkey", "ps_supplycost"])
+        [final_cols]
+        .sort_values(
+            by=["s_acctbal", "n_name", "s_name", "p_partkey"],
+            ascending=[False, True, True, True],
+        )
+        .head(100)
+    )
+
+    return q_final
+
+
+def query_5_polars():
+    var_1 = 15
+    var_2 = "BRASS"
+    var_3 = "EUROPE"
+
+    region_df = pl.scan_parquet('data/tpch/region/*')
+    nation_df = pl.scan_parquet('data/tpch/nation/*')
+    supplier_df = pl.scan_parquet('data/tpch/supplier/*')
+    part_df = pl.scan_parquet('data/tpch/part/*')
+    part_supp_df = pl.scan_parquet('data/tpch/partsupp/*')
+
+    result_q1 = (
+        part_df.join(part_supp_df, left_on="p_partkey", right_on="ps_partkey")
+        .join(supplier_df, left_on="ps_suppkey", right_on="s_suppkey")
+        .join(nation_df, left_on="s_nationkey", right_on="n_nationkey")
+        .join(region_df, left_on="n_regionkey", right_on="r_regionkey")
+        .filter(pl.col("p_size") == var_1)
+        .filter(pl.col("p_type").str.ends_with(var_2))
+        .filter(pl.col("r_name") == var_3)
+    ).cache()
+
+    final_cols = [
+        "s_acctbal",
+        "s_name",
+        "n_name",
+        "p_partkey",
+        "p_mfgr",
+        "s_address",
+        "s_phone",
+        "s_comment",
+    ]
+
+    q_final = (
+        result_q1.group_by("p_partkey")
+        .agg(pl.min("ps_supplycost"))
+        .join(result_q1, on=["p_partkey", "ps_supplycost"])
+        .select(final_cols)
+        .sort(
+            by=["s_acctbal", "n_name", "s_name", "p_partkey"],
+            descending=[True, False, False, False],
+        )
+        .limit(100)
+    )
+
+    return q_final.collect()
+

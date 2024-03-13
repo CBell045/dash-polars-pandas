@@ -58,7 +58,7 @@ layout = [
     dmc.Title("Speed Comparison", order=1),
     dmc.Text("This page allows you to visualize the performance difference between Polars and Pandas. Click the 'Run Query' button to see the time it takes to run the query in both Polars and Pandas."),
     dmc.Space(h=10),
-    dmc.Alert("This isn't a real benchmark and other factors in the app affect performance. For simplicity in comparing to Pandas, these examples do not use LazyFrames. But, it should give you a general idea of the performance difference between the two libraries.", title="Disclaimer", color="red"),
+    dmc.Alert("This isn't a real benchmark and other factors in the app affect performance. For simplicity in comparing to Pandas, some examples do not use LazyFrames. But, it should give you a general idea of the performance difference between the two libraries.", title="Disclaimer", color="red"),
     dmc.Space(h=20),
     dmc.Divider(),
 
@@ -67,6 +67,7 @@ layout = [
     create_query(2, "Common Operations", "These come from the Pandas documentation and are common dataframe operations."),
     create_query(3, "Read TCP-H Parquet", "Ramping up -- we will read in a larger dataset, a subset of the TCP-H benchmark."),
     create_query(4, "TCP-H Query #1", "Now it's time for a real query from the TCP-H benchmark. "),
+    create_query(5, "TCP-H Query #2", "This final query was taken from the Polars TCP-H benchmark and utilizes LazyFrames for optimal performance. With Lazy Execution, Polars really shines."),
 ]
 
 
