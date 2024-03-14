@@ -2,6 +2,7 @@ import dash
 import dash_mantine_components as dmc
 from dash import html, Dash, dcc, Input, Output, State
 from dash_iconify import DashIconify
+from collections import OrderedDict
 
 # Initialize Dash app.
 app = Dash(__name__, use_pages=True, title="Dash: Polars vs Pandas", suppress_callback_exceptions=True)
@@ -13,6 +14,7 @@ server = app.server
 nav_items = {
     page['name'].replace("_", " ").title(): page['path'] for page in dash.page_registry.values()
 }
+nav_items = OrderedDict(sorted(nav_items.items(), key=lambda x: x[0].lower()))
 
 def serve_layout(): 
     return html.Div([

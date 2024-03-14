@@ -38,7 +38,7 @@ def create_query(q_number, title, text):
                     dmc.Card([
                         dmc.Group([
                             dmc.Button(f"Run Query {q_number}", id={"type": "button", "index": q_number}),
-                            dmc.Text(children="Pandas vs Polars Time: ", size='sm'),
+                            dmc.Text(children="Pandas vs Polars Time:", size='sm'),
                             dmc.Text(size='sm', id={"type": "time", "index": q_number}),
                         ]),
                         
@@ -97,6 +97,16 @@ def run_queries(n_clicks, id):
     # Create the figure
     fig = px.bar(y=["Polars", "Pandas"], x=[polars_time, pandas_time], template='none', height=250, labels={"x": "Time (s)", "y": ""})
 
-    # Return the figure and the time it took to run the functions
-    return fig, f"{pandas_time:.4f}s vs {polars_time:.4f}s"
+    # Determine the winner and the speed difference
+    winner = "Polars" if polars_time < pandas_time else "Pandas"
+    x_faster = max(polars_time, pandas_time)/min(polars_time, pandas_time)
+
+    # Create the text to display the time it took to run the functions
+    text = [
+        dmc.Text(f"{pandas_time:.4f}s vs {polars_time:.4f}s"),
+        dmc.Text(f"({winner} is {x_faster:.2f}x faster)", weight='bold'),
+    ]
+
+    # Return the figure and the text
+    return fig, text
     
