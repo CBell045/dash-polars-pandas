@@ -7,7 +7,7 @@ import plotly.graph_objects as go
 from dash_iconify import DashIconify
 
 # Initialize the page
-dash.register_page(__name__, path='/')
+dash.register_page(__name__)
 
 show_code = getattr(queries, "show_code")
 timer = getattr(queries, "timer")

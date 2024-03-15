@@ -15,7 +15,7 @@ with open(file_name, "r") as file:
     source_code = file.read()
 
 # Register page
-dash.register_page(__name__)
+dash.register_page(__name__, path='/')
 
 layout = html.Div([
     dmc.Title("Minimal Dash App in Polars", order=1),
