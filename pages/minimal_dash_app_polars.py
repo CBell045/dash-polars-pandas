@@ -19,7 +19,7 @@ dash.register_page(__name__, path='/')
 
 layout = html.Div([
     dmc.Title("Minimal Dash App in Polars", order=1),
-    dmc.Text(["This example is from the ", dmc.Anchor("Dash documentation", href="https://dash.plotly.com/basic-callbacks"), ", rewritten with Polars instead of Pandas."]),
+    dmc.Text(["This example is from the ", dmc.Anchor("Dash documentation", href="https://dash.plotly.com/minimal-app"), ", rewritten with Polars instead of Pandas."]),
     dmc.Space(h=20),
     dmc.Divider(),
 
