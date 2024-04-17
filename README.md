@@ -5,12 +5,11 @@ Image Credit: Google Gemini
 
 This is a simple comparison between Polars and Pandas as used in a Plotly Dash App. 
 
-<!-- You can check out the app [here](https://dash-polars-pandas.onrender.com/). -->
 
 ## App Preview
 Here's a preview of the app:
-[![App](images/app.png)](https://dash-polars-vs-pandas.onrender.com)
-Demo: [https://dash-polars-vs-pandas.onrender.com](https://dash-polars-vs-pandas.onrender.com)
+[![App](images/app.png)](https://dash-polars-pandas-docker.onrender.com/)
+Demo: [https://dash-polars-pandas-docker.onrender.com/](https://dash-polars-pandas-docker.onrender.com/)
 
 *Note: The app is hosted for free, so it might take a few seconds to load.*
 
